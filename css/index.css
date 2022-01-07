@@ -17,12 +17,7 @@ body {
 }
 .container {
     display: flex;
-}.page {
-    margin: 0;
-    min-height: 100vh;
-    padding-bottom: 50px;
 }
-
 
 .highlight {
     background-color: rgba(37, 20, 8, 0.4);
@@ -60,6 +55,8 @@ body {
     margin:20px;
     background-color: yellow;
 }
+
+.top5 { margin-top:5%; }
 
 
 .action_button {
