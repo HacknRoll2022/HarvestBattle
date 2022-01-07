@@ -219,39 +219,23 @@ function plant(coordinate, action){
         return points;
     }
     if(action == "p2"){
-        points.push(coordinate - 40);
-        points.push(coordinate - 30);
-        points.push(coordinate - 20);
-        points.push(coordinate - 10);
-        points.push(coordinate);
-        points.push(coordinate + 10);
-        points.push(coordinate + 20);
-        points.push(coordinate + 30);
-        points.push(coordinate + 40);
-
-        for(i = 0; i < points.length; i++){
-            if (points[i] < 0 || points[i] > 99){
-                points.splice(i);
+        var offset = [-40,-30,-20,-10,0,10,20,30,40];
+        offset.forEach(o => {
+            var val = coordinate + o;
+            if (val >= 0 && val < 100) {
+                points.push(val);
             }
-        }
+        })
         return points;
     }
     if(action == "p3"){
-        points.push(coordinate - 4);
-        points.push(coordinate - 3);
-        points.push(coordinate - 2);
-        points.push(coordinate - 1);
-        points.push(coordinate);
-        points.push(coordinate + 1);
-        points.push(coordinate + 2);
-        points.push(coordinate + 3);
-        points.push(coordinate + 4);
-
-        for(i = 0; i < points.length; i++){
-            if (points[i] < 0 || points[i] > 99){
-                points.splice(i);
+        var offset = [-4,-3,-2,-1,0,1,2,3,4];
+        offset.forEach(o => {
+            var val = coordinate + o;
+            if (val >= 0 && val < 100) {
+                points.push(val);
             }
-        }
+        })
         return points;
     }
     if(action == "h1"){
