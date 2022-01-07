@@ -1,9 +1,16 @@
 .container{
     display: flex;
 }
-.grid-user1{
-    width: 400px;
-    height:400px;
+
+@media (hover: hover) {	
+	.grid div:hover {
+        background-color: rgba(37, 20, 8, 0.4);
+    }
+}
+
+.grid-user1 {
+    width: 600px;
+    height: 600px;
     display: flex;
     flex-wrap: wrap;
     margin: 20px;
@@ -14,7 +21,7 @@
 
 .grid-user2{
     width: 400px;
-    height:400px;
+    height: 400px;
     display: flex;
     flex-wrap: wrap;
     background-color: green;
@@ -22,8 +29,8 @@
 }
 
 .grid div{
-    width:40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
 }
 
 .grid-display{
@@ -31,6 +38,20 @@
     height:400px;
     margin:20px;
     background-color: yellow;
+}
+
+.action_button {
+	background-color: #fccd66;
+	background-image: linear-gradient(#ffe16d, #fccd66);
+	box-sizing: border-box;
+	border-radius: 15px;
+	color: #000000;
+	cursor: pointer;
+	display: block;
+	font-weight: 600;
+	margin: 5px;
+	padding: 15px 10px;	
+	text-align: center;
 }
 
 .flower-container{
