@@ -36,6 +36,25 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
 
 }));
 
+// SELECT ACTION
+document.querySelectorAll('.action_button').forEach(b => b.addEventListener('click', function () {
+        console.log(b.id);
+
+        var btnID = b.id;
+        var btn = document.querySelector('#' + btnID);
+
+        // reset all other buttons
+        var btns = document.querySelectorAll('.action_button');
+        [].forEach.call(btns, function(btns) {
+            btns.dataset.selected = 0;
+            btns.style.backgroundColor = "#fccd66";
+        });
+        
+        btn.dataset.selected = 1;
+        btn.style.backgroundColor = '#F5DBBC';
+    })
+)
+
 
 
 

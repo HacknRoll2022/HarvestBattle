@@ -42,7 +42,7 @@
 
 .action_button {
 	background-color: #fccd66;
-	background-image: linear-gradient(#ffe16d, #fccd66);
+	/* background-image: linear-gradient(#ffe16d, #fccd66); */
 	box-sizing: border-box;
 	border-radius: 15px;
 	color: #000000;
