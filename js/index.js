@@ -62,7 +62,6 @@ Array.from(user1Squares).forEach(v => v.addEventListener('mouseover', function (
     [].forEach.call(idx, function(idx) {
         var element = document.getElementById('sq' + idx);
         element.classList.add("highlight");
-        console.log(element.classList);
     })
 
     console.log(idx.toString());
@@ -88,7 +87,6 @@ Array.from(user1Squares).forEach(v => v.addEventListener('mouseleave', function 
     [].forEach.call(idx, function(idx) {
         var element = document.getElementById('sq' + idx);
         element.classList.remove("highlight");
-        console.log(element.classList);
     })
 
 }));
@@ -233,7 +231,10 @@ function plant(coordinate, action){
         offset.forEach(o => {
             var val = coordinate + o;
             if (val >= 0 && val < 100) {
-                points.push(val);
+                tens = Math.floor(coordinate / 10)
+                if (Math.floor(val / 10) == tens) {
+                    points.push(val);
+                }
             }
         })
         return points;
