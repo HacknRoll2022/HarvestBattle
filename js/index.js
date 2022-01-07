@@ -2,15 +2,26 @@ const width = 10;
 const user1Grid = document.querySelector('.grid-user1');
 const user1Squares = []
 const plants = [['', 'carrot_plant.png','carrot_grow.png','carrot_rot.png'], ['', 'radish_plant.png','radish_grow.png','radish_rot.png']]
-const p1Score = document.getElementById('p1_score');
-const p2Score = document.getElementById('p2_score');
+const p1Score_el = document.getElementById('p1_score');
+const p2Score_el = document.getElementById('p2_score');
 const p1Turn = document.getElementById('player1_turn');
 const p2Turn = document.getElementById('player2_turn');
 const playerNumber = 1; // need to set in function later
 const maxState = 10;
-var gridData = [];
 
+var gameData = [];
+var gridData = [];
+var p1Score = 0;
+var p2Score = 0;
 var playerTurn = 0;
+
+init();
+function init() {
+    updateScore(0);
+    updatePlayerTurn();
+    createBoard(user1Grid, user1Squares)
+}
+
 //create board
 function createBoard(grid, squares) {
     for (let i = 0; i < width * width; i++) {
@@ -21,18 +32,15 @@ function createBoard(grid, squares) {
         square.dataset.state = 0;
         square.dataset.type = 0;
         // Math.floor(Math.random() * 2)%2?1:4; //either carrot or radish
-        // console.log(square)
         grid.appendChild(square)
         squares.push(square)
     }
 }
-createBoard(user1Grid, user1Squares)
 
 
 // var grid = document.getElementsByClassName('square');
 
 Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
-    console.log(Object.values(v.dataset).splice(1));
     // console.log( typeof Object.assign({}, v.dataset));
     console.log(v.dataset.state)
 
@@ -75,6 +83,7 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
                     }
                 }
             })
+            updateScore(numHarvest * 10);
         } else if (action_type == "s") {
             Array.from(user1Squares).forEach(v => {
                 var sqClass = document.getElementById('sq' + v.dataset.id).className;
@@ -115,7 +124,7 @@ Array.from(user1Squares).forEach(v => v.addEventListener('mouseover', function (
         element.classList.add("highlight");
     })
 
-    console.log(idx.toString());
+    // console.log(idx.toString());
 }));
 
 // Remove highlight squares
@@ -270,8 +279,14 @@ function plant(coordinate, action){
     }
 }
 
-function updateScore(){
-    //if(player)
+function updateScore(score){
+    if(playerNumber == 1) {
+        p1Score += score;
+        p1Score_el.textContent = "Player 1: " + String(p1Score);
+    } else {
+        p2Score += score;
+        p2Score_el.textContent = "Player 2: " + String(p2Score);
+    }
 }
 
 function updatePlayerTurn(){
@@ -309,5 +324,5 @@ function updateAll(){
             
         }
     })
-    console.log(gridData);
+    // console.log(gridData);
 }
