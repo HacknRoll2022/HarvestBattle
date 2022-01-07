@@ -191,6 +191,11 @@ function plant(coordinate, action){
         points.push(coordinate + 10);
         points.push(coordinate + 11);
 
+        for(i = 0; i < points.length; i++){
+            if (points[i] < 0 || points[i] > 99){
+                points.splice(i);
+            }
+        }
         return points;
     }
     if(action == "p2"){
@@ -204,6 +209,11 @@ function plant(coordinate, action){
         points.push(coordinate + 30);
         points.push(coordinate + 40);
 
+        for(i = 0; i < points.length; i++){
+            if (points[i] < 0 || points[i] > 99){
+                points.splice(i);
+            }
+        }
         return points;
     }
     if(action == "p3"){
@@ -217,6 +227,11 @@ function plant(coordinate, action){
         points.push(coordinate + 3);
         points.push(coordinate + 4);
 
+        for(i = 0; i < points.length; i++){
+            if (points[i] < 0 || points[i] > 99){
+                points.splice(i);
+            }
+        }
         return points;
     }
     if(action == "h1"){
@@ -225,6 +240,11 @@ function plant(coordinate, action){
         points.push(coordinate);
         points.push(coordinate + 1);
 
+        for(i = 0; i < points.length; i++){
+            if (points[i] < 0 || points[i] > 99){
+                points.splice(i);
+            }
+        }
         return points;
     }
     if(action == "h2"){
@@ -233,6 +253,11 @@ function plant(coordinate, action){
         points.push(coordinate - 1);
         points.push(coordinate);
 
+        for(i = 0; i < points.length; i++){
+            if (points[i] < 0 || points[i] > 99){
+                points.splice(i);
+            }
+        }
         return points;
     }
     if(action == "h3"){
@@ -241,6 +266,11 @@ function plant(coordinate, action){
         points.push(coordinate + 2);
         points.push(coordinate + 3);
 
+        for(i = 0; i < points.length; i++){
+            if (points[i] < 0 || points[i] > 99){
+                points.splice(i);
+            }
+        }
         return points;
     }
     if(action == "s1"){
@@ -250,6 +280,11 @@ function plant(coordinate, action){
         points.push(coordinate + 1);
         points.push(coordinate + 10);
 
+        for(i = 0; i < points.length; i++){
+            if (points[i] < 0 || points[i] > 99){
+                points.splice(i);
+            }
+        }
         return points;
     }
     if(action == "s2"){
@@ -259,6 +294,11 @@ function plant(coordinate, action){
         points.push(coordinate + 9);
         points.push(coordinate + 11);
 
+        for(i = 0; i < points.length; i++){
+            if (points[i] < 0 || points[i] > 99){
+                points.splice(i);
+            }
+        }
         return points;
     }
 }
