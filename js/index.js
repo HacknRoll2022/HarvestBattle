@@ -291,8 +291,17 @@ function updateScore(score){
 
 function updatePlayerTurn(){
     playerTurn = (playerTurn)?0:1;
-    p1Turn.style.display = (playerTurn)?'block':'none';
-    p2Turn.style.display = (playerTurn)?'none':'block';
+    // p1Turn.style.display = (playerTurn)?'block':'none';
+    // p2Turn.style.display = (playerTurn)?'none':'block';
+
+    if(playerNumber == 1) {
+        p1Turn.textContent = (playerTurn)?'It\'s your turn!':'';
+        p2Turn.textContent = (playerTurn)?'':'It\'s Player 2\'s turn!';
+    } else {
+        p2Turn.textContent = (playerTurn)?'It\'s your turn!':'';
+        p1Turn.textContent = (playerTurn)?'':'It\'s Player 1\'s turn!';
+    }
+    
 }
 
 
