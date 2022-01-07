@@ -36,6 +36,43 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
 
 }));
 
+// Highlight squares
+Array.from(user1Squares).forEach(v => v.addEventListener('mouseover', function () {
+    var indicator = parseInt(v.dataset.id);
+
+    var btns = document.querySelectorAll('.action_button');
+    var action = "";
+
+    [].forEach.call(btns, function(btns) {
+        if (btns.dataset.selected == 1) {
+            action = btns.id;
+        }
+    })
+
+    var idx = plant(indicator,action);
+    console.log(idx.toString());
+
+    
+    // var element = document.getElementById("myDIV");
+    // element.classList.add("mystyle");
+
+
+    // v.style.backgroundImage = 'url(assets/' + plants[v.dataset.state] + ')';
+    // console.log(v.dataset.state)
+    // console.log(v.style.backgroundImage)
+
+
+    // if(v.dataset.state==0){
+    //     v.dataset.state= Math.floor(Math.random() * 2)%2?1:4; //either carrot or radish
+    //     console.log(v.dataset.state)
+    // }else if(v.dataset.state<3){
+    //     v.dataset.state = (v.dataset.state==1)?2:((v.dataset.state==2)?3:0);
+    // }else{
+    //     v.dataset.state = (v.dataset.state==4)?5:((v.dataset.state==5)?6:0);
+    // }
+
+}));
+
 // SELECT ACTION
 document.querySelectorAll('.action_button').forEach(b => b.addEventListener('click', function () {
         console.log(b.id);
@@ -47,11 +84,11 @@ document.querySelectorAll('.action_button').forEach(b => b.addEventListener('cli
         var btns = document.querySelectorAll('.action_button');
         [].forEach.call(btns, function(btns) {
             btns.dataset.selected = 0;
-            btns.style.backgroundColor = "#fccd66";
+            btns.style.backgroundColor = "#2ec4ff";
         });
         
         btn.dataset.selected = 1;
-        btn.style.backgroundColor = '#F5DBBC';
+        btn.style.backgroundColor = '#004AAD';
     })
 )
 
@@ -143,7 +180,7 @@ document.querySelectorAll('.action_button').forEach(b => b.addEventListener('cli
 function plant(coordinate, action){
     const points = new Array();
 
-    if(action == 1){
+    if(action == "p1"){
         points.push(coordinate - 11);
         points.push(coordinate - 10);
         points.push(coordinate - 9);
@@ -156,7 +193,7 @@ function plant(coordinate, action){
 
         return points;
     }
-    if(action == 2){
+    if(action == "p2"){
         points.push(coordinate - 40);
         points.push(coordinate - 30);
         points.push(coordinate - 20);
@@ -169,7 +206,7 @@ function plant(coordinate, action){
 
         return points;
     }
-    if(action == 3){
+    if(action == "p3"){
         points.push(coordinate - 4);
         points.push(coordinate - 3);
         points.push(coordinate - 2);
@@ -182,7 +219,7 @@ function plant(coordinate, action){
 
         return points;
     }
-    if(action == 4){
+    if(action == "h1"){
         points.push(coordinate - 10);
         points.push(coordinate - 9);
         points.push(coordinate);
@@ -190,7 +227,7 @@ function plant(coordinate, action){
 
         return points;
     }
-    if(action == 5){
+    if(action == "h2"){
         points.push(coordinate - 3);
         points.push(coordinate - 2);
         points.push(coordinate - 1);
@@ -198,7 +235,7 @@ function plant(coordinate, action){
 
         return points;
     }
-    if(action == 6){
+    if(action == "h3"){
         points.push(coordinate);
         points.push(coordinate + 1);
         points.push(coordinate + 2);
@@ -206,7 +243,7 @@ function plant(coordinate, action){
 
         return points;
     }
-    if(action == 7){
+    if(action == "s1"){
         points.push(coordinate - 10);
         points.push(coordinate - 1);
         points.push(coordinate);
@@ -215,7 +252,7 @@ function plant(coordinate, action){
 
         return points;
     }
-    if(action == 8){
+    if(action == "s2"){
         points.push(coordinate - 11);
         points.push(coordinate - 9);
         points.push(coordinate);
