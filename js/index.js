@@ -71,7 +71,6 @@ Array.from(user1Squares).forEach(v => v.addEventListener('mouseover', function (
     [].forEach.call(idx, function(idx) {
         var element = document.getElementById('sq' + idx);
         element.classList.add("highlight");
-        console.log(element.classList);
     })
 
     console.log(idx.toString());
@@ -97,7 +96,6 @@ Array.from(user1Squares).forEach(v => v.addEventListener('mouseleave', function 
     [].forEach.call(idx, function(idx) {
         var element = document.getElementById('sq' + idx);
         element.classList.remove("highlight");
-        console.log(element.classList);
     })
 
 }));
@@ -125,21 +123,16 @@ function plant(coordinate, action){
     const points = new Array();
 
     if(action == "p1"){
-        points.push(coordinate - 11);
-        points.push(coordinate - 10);
-        points.push(coordinate - 9);
-        points.push(coordinate - 1);
-        points.push(coordinate);
-        points.push(coordinate + 1);
-        points.push(coordinate + 9);
-        points.push(coordinate + 10);
-        points.push(coordinate + 11);
-
-        for(i = 0; i < points.length; i++){
-            if (points[i] < 0 || points[i] > 99){
-                points.splice(i);
-            }
-        }
+        var offset = [[-11,-10,-9],[-1,0,1],[9,10,11]];
+        offset.forEach(o => {
+            tens = Math.floor((coordinate + o[1]) / 10)
+            o.forEach(n => {
+                var val = coordinate + n;
+                if ((Math.floor(val/10) == tens) && (val >= 0 && val < 100)) {
+                    points.push(val);
+                }
+            })
+        })
         return points;
     }
     if(action == "p2"){
@@ -157,77 +150,82 @@ function plant(coordinate, action){
         offset.forEach(o => {
             var val = coordinate + o;
             if (val >= 0 && val < 100) {
-                points.push(val);
+                tens = Math.floor(coordinate / 10)
+                if (Math.floor(val / 10) == tens) {
+                    points.push(val);
+                }
             }
         })
         return points;
     }
     if(action == "h1"){
-        points.push(coordinate - 10);
-        points.push(coordinate - 9);
-        points.push(coordinate);
-        points.push(coordinate + 1);
-
-        for(i = 0; i < points.length; i++){
-            if (points[i] < 0 || points[i] > 99){
-                points.splice(i);
-            }
-        }
+        var offset = [[-10, -9], [0, 1]];
+        offset.forEach(o => {
+            tens = Math.floor((coordinate + o[0]) / 10)
+            o.forEach(n => {
+                var val = coordinate + n;
+                if ((Math.floor(val/10) == tens) && (val >= 0 && val < 100)) {
+                    points.push(val);
+                }
+            })
+        })
         return points;
     }
     if(action == "h2"){
-        points.push(coordinate - 3);
-        points.push(coordinate - 2);
-        points.push(coordinate - 1);
-        points.push(coordinate);
+        var offset = [0,10,20,30]
 
-        for(i = 0; i < points.length; i++){
-            if (points[i] < 0 || points[i] > 99){
-                points.splice(i);
+        offset.forEach(o => {
+            if (coordinate + o < 100) {
+                points.push(coordinate + o)
             }
-        }
-        return points;
+        })
     }
     if(action == "h3"){
-        points.push(coordinate);
-        points.push(coordinate + 1);
-        points.push(coordinate + 2);
-        points.push(coordinate + 3);
 
-        for(i = 0; i < points.length; i++){
-            if (points[i] < 0 || points[i] > 99){
-                points.splice(i);
+        var offset = [0,1,2,3];
+        offset.forEach(o => {
+            var val = coordinate + o;
+            if (val >= 0 && val < 100) {
+                points.push(val);
             }
-        }
+        })
+
         return points;
     }
     if(action == "s1"){
-        points.push(coordinate - 10);
-        points.push(coordinate - 1);
-        points.push(coordinate);
-        points.push(coordinate + 1);
-        points.push(coordinate + 10);
-
-        for(i = 0; i < points.length; i++){
-            if (points[i] < 0 || points[i] > 99){
-                points.splice(i);
+        var offsetVert = [-10, 0, 10];
+        offsetVert.forEach(o => {
+            var val = coordinate + o;
+            if (val >= 0 && val < 100) {
+                points.push(val)
             }
-        }
+        })
+        var offsetHoriz = [-1, 1];
+        var tens = Math.floor((coordinate) / 10)
+        offsetHoriz.forEach(o => {
+            var val = coordinate + o;
+            if (Math.floor(val/10) == tens) {
+                points.push(val);
+            }
+        })
         return points;
+
     }
     if(action == "s2"){
-        points.push(coordinate - 11);
-        points.push(coordinate - 9);
         points.push(coordinate);
-        points.push(coordinate + 9);
-        points.push(coordinate + 11);
 
-        for(i = 0; i < points.length; i++){
-            if (points[i] < 0 || points[i] > 99){
-                points.splice(i);
-            }
-        }
+        var offset = [[-11,-9],[9,11]];
+        offset.forEach(o => {
+            tens = Math.floor((coordinate + (o[1] + o[0])/2) / 10)
+            o.forEach(n => {
+                var val = coordinate + n;
+                if ((Math.floor(val/10) == tens) && (val >= 0 && val < 100)) {
+                    points.push(val);
+                }
+            })
+        })
         return points;
+
     } else {
         points.push(coordinate);
         return points
