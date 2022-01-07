@@ -8,6 +8,7 @@ function createBoard(grid, squares) {
         const square = document.createElement('div')
         square.className = "square"
         square.dataset.id = i;
+        square.setAttribute('id', 'sq' + i);
         square.dataset.state = Math.floor(Math.random() * 2)%2?1:4; //either carrot or radish
         console.log(square)
         grid.appendChild(square)
@@ -50,26 +51,45 @@ Array.from(user1Squares).forEach(v => v.addEventListener('mouseover', function (
     })
 
     var idx = plant(indicator,action);
+
+    // Array.from(user1Squares).forEach(v => {
+    //     if (v.dataset.id in idx) {
+
+    //     }
+    // }
+
+
+    [].forEach.call(idx, function(idx) {
+        var element = document.getElementById('sq' + idx);
+        element.classList.add("highlight");
+        console.log(element.classList);
+    })
+
     console.log(idx.toString());
 
-    
-    // var element = document.getElementById("myDIV");
-    // element.classList.add("mystyle");
 
+}));
 
-    // v.style.backgroundImage = 'url(assets/' + plants[v.dataset.state] + ')';
-    // console.log(v.dataset.state)
-    // console.log(v.style.backgroundImage)
+// Highlight squares
+Array.from(user1Squares).forEach(v => v.addEventListener('mouseleave', function () {
+    var indicator = parseInt(v.dataset.id);
 
+    var btns = document.querySelectorAll('.action_button');
+    var action = "";
 
-    // if(v.dataset.state==0){
-    //     v.dataset.state= Math.floor(Math.random() * 2)%2?1:4; //either carrot or radish
-    //     console.log(v.dataset.state)
-    // }else if(v.dataset.state<3){
-    //     v.dataset.state = (v.dataset.state==1)?2:((v.dataset.state==2)?3:0);
-    // }else{
-    //     v.dataset.state = (v.dataset.state==4)?5:((v.dataset.state==5)?6:0);
-    // }
+    [].forEach.call(btns, function(btns) {
+        if (btns.dataset.selected == 1) {
+            action = btns.id;
+        }
+    })
+
+    var idx = plant(indicator,action);
+
+    [].forEach.call(idx, function(idx) {
+        var element = document.getElementById('sq' + idx);
+        element.classList.remove("highlight");
+        console.log(element.classList);
+    })
 
 }));
 
@@ -260,5 +280,8 @@ function plant(coordinate, action){
         points.push(coordinate + 11);
 
         return points;
+    } else {
+        points.push(coordinate);
+        return points
     }
 }

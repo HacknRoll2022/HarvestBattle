@@ -5,10 +5,13 @@ body {
     display: flex;
 }
 
-@media (hover: hover) {	
-	.grid div:hover {
+/* @media (hover: hover) {	
+	.highlight {
         background-color: rgba(37, 20, 8, 0.4);
     }
+} */
+.highlight {
+    background-color: rgba(37, 20, 8, 0.4);
 }
 
 .grid-user1 {
@@ -34,6 +37,7 @@ body {
 .grid div{
     width: 60px;
     height: 60px;
+    border: 1px dotted #401F0D;
 }
 
 .grid-display{
