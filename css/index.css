@@ -57,14 +57,6 @@ body {
 	text-align: center;
 }
 
-.squarebox {
-    margin: auto;
-    width: 50%;
-    background-color: white;
-	padding-bottom: 100%; 
-	overflow: hidden;
-}
-
 .flower-container{
     width: 40px;
     height: 40px;
