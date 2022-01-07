@@ -6,8 +6,9 @@ const p1Score = document.getElementById('p1_score');
 const p2Score = document.getElementById('p2_score');
 const p1Turn = document.getElementById('player1_turn');
 const p2Turn = document.getElementById('player2_turn');
-const playerNumber = 2; // need to set in function later
+const playerNumber = 1; // need to set in function later
 const maxState = 10;
+var gridData = [];
 
 var playerTurn = 0;
 //create board
@@ -31,7 +32,8 @@ createBoard(user1Grid, user1Squares)
 // var grid = document.getElementsByClassName('square');
 
 Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
-    console.log( typeof Object.assign({}, v.dataset));
+    console.log(Object.values(v.dataset).splice(1));
+    // console.log( typeof Object.assign({}, v.dataset));
     console.log(v.dataset.state)
 
     var btns = document.querySelectorAll('.action_button');
@@ -46,7 +48,7 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
     if (action_type == "p") {
         Array.from(user1Squares).forEach(v => {
             var sqClass = document.getElementById('sq' + v.dataset.id).className;
-            if (sqClass.includes("highlight") && v.dataset.state == 0) {
+            if (sqClass.includes("highlight") && v.dataset.type == 0 && v.dataset.state == 0) {
                 v.dataset.state = 1;
                 v.dataset.type = playerNumber;
 
@@ -60,8 +62,9 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
     } else if (action_type == "h") {
         Array.from(user1Squares).forEach(v => {
             var sqClass = document.getElementById('sq' + v.dataset.id).className;
-            if (sqClass.includes("highlight") && (v.dataset.state >= 4 && v.dataset.state <= 8) && v.dataset.type == playerNumber) {
+            if (sqClass.includes("highlight") && (v.dataset.state > 4 && v.dataset.state <= 8) && v.dataset.type == playerNumber) {
                 v.dataset.state = 0;
+                v.dataset.type = 0;
                 if (playerNumber == 1) {
                     v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
                 } else if (playerNumber == 2) {
@@ -74,6 +77,7 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
             var sqClass = document.getElementById('sq' + v.dataset.id).className;
             if (sqClass.includes("highlight") && v.dataset.state < 9 && v.dataset.type != playerNumber && v.dataset.type != 0) {
                 v.dataset.state = 0;
+                v.dataset.type = 0;
                 if (playerNumber == 1) {
                     v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
                 } else if (playerNumber == 2) {
@@ -276,8 +280,10 @@ function updatePlayerTurn(){
 
 
 function updateAll(){
-    Array.from(user1Squares).forEach(v => {    
-        if(v.dataset.state!=0){
+    gridData = [];
+    Array.from(user1Squares).forEach(v => {   
+        gridData.push(Object.values(v.dataset).splice(1));
+        if(v.dataset.state!=0 && v.dataset.type != 0){
 
             if (v.dataset.state == 4) {
                 // change to grow
@@ -288,6 +294,9 @@ function updateAll(){
                 // change to rot
                 v.style.backgroundImage = 'url(assets/' + plants[playerNumber - 1][3] + ')';
             }
+            
+            // increase the age of the plant
+            v.dataset.state = parseInt(v.dataset.state) + 1;
 
             if (v.dataset.state == 11) {
                 // remove 
@@ -296,8 +305,7 @@ function updateAll(){
                 v.style.backgroundImage = 'url(assets/' + plants[playerNumber - 1][0] + ')';
             }
             
-            // increase the age of the plant
-            v.dataset.state = parseInt(v.dataset.state) + 1;
         }
     })
+    console.log(gridData);
 }
