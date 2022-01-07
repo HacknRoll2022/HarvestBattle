@@ -265,16 +265,15 @@ function plant(coordinate, action){
         return points;
     }
     if(action == "h3"){
-        points.push(coordinate);
-        points.push(coordinate + 1);
-        points.push(coordinate + 2);
-        points.push(coordinate + 3);
 
-        for(i = 0; i < points.length; i++){
-            if (points[i] < 0 || points[i] > 99){
-                points.splice(i);
+        var offset = [0,1,2,3];
+        offset.forEach(o => {
+            var val = coordinate + o;
+            if (val >= 0 && val < 100) {
+                points.push(val);
             }
-        }
+        })
+
         return points;
     }
     if(action == "s1"){
