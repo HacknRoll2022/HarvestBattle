@@ -9,8 +9,9 @@ function createBoard(grid, squares) {
         square.className = "square"
         square.dataset.id = i;
         square.setAttribute('id', 'sq' + i);
-        square.dataset.state = Math.floor(Math.random() * 2)%2?1:4; //either carrot or radish
-        console.log(square)
+        square.dataset.state = 1;
+        // Math.floor(Math.random() * 2)%2?1:4; //either carrot or radish
+        // console.log(square)
         grid.appendChild(square)
         squares.push(square)
     }
@@ -21,19 +22,30 @@ createBoard(user1Grid, user1Squares)
 // var grid = document.getElementsByClassName('square');
 
 Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
-    v.style.backgroundImage = 'url(assets/' + plants[v.dataset.state] + ')';
-    console.log(v.dataset.state)
-    console.log(v.style.backgroundImage)
+    console.log( typeof Object.assign({}, v.dataset));
+    // console.log(v.dataset.state)
+    // console.log(v.style.backgroundImage)
 
-
+    
     if(v.dataset.state==0){
-        v.dataset.state= Math.floor(Math.random() * 2)%2?1:4; //either carrot or radish
+        
+        // v.dataset.state= Math.floor(Math.random() * 2)%2?1:4; //either carrot or radish
+        v.dataset.state = 1;
         console.log(v.dataset.state)
     }else if(v.dataset.state<3){
-        v.dataset.state = (v.dataset.state==1)?2:((v.dataset.state==2)?3:0);
-    }else{
-        v.dataset.state = (v.dataset.state==4)?5:((v.dataset.state==5)?6:0);
+        Array.from(user1Squares).forEach(v => {
+            var sqClass = document.getElementById('sq' + v.dataset.id).className;
+            console.log(sqClass.includes("highlight"));
+            if (sqClass.includes("highlight")) {
+                v.dataset.state = (v.dataset.state==1)?2:((v.dataset.state==2)?3:0);
+                v.style.backgroundImage = 'url(assets/' + plants[v.dataset.state] + ')';
+            }
+        })
     }
+    // else{
+    //     v.dataset.state = (v.dataset.state==4)?5:((v.dataset.state==5)?6:0);
+    // }
+    v.style.backgroundImage = 'url(assets/' + plants[v.dataset.state] + ')';
 
 }));
 
@@ -52,24 +64,15 @@ Array.from(user1Squares).forEach(v => v.addEventListener('mouseover', function (
 
     var idx = plant(indicator,action);
 
-    // Array.from(user1Squares).forEach(v => {
-    //     if (v.dataset.id in idx) {
-
-    //     }
-    // }
-
-
     [].forEach.call(idx, function(idx) {
         var element = document.getElementById('sq' + idx);
         element.classList.add("highlight");
     })
 
     console.log(idx.toString());
-
-
 }));
 
-// Highlight squares
+// Remove highlight squares
 Array.from(user1Squares).forEach(v => v.addEventListener('mouseleave', function () {
     var indicator = parseInt(v.dataset.id);
 
@@ -88,7 +91,6 @@ Array.from(user1Squares).forEach(v => v.addEventListener('mouseleave', function 
         var element = document.getElementById('sq' + idx);
         element.classList.remove("highlight");
     })
-
 }));
 
 // SELECT ACTION
@@ -225,11 +227,9 @@ function plant(coordinate, action){
         var offset = [-4,-3,-2,-1,0,1,2,3,4];
         offset.forEach(o => {
             var val = coordinate + o;
-            if (val >= 0 && val < 100) {
-                tens = Math.floor(coordinate / 10)
-                if (Math.floor(val / 10) == tens) {
-                    points.push(val);
-                }
+            tens = Math.floor(coordinate / 10)
+            if (Math.floor(val / 10) == tens) {
+                points.push(val);
             }
         })
         return points;
@@ -261,7 +261,8 @@ function plant(coordinate, action){
         var offset = [0,1,2,3];
         offset.forEach(o => {
             var val = coordinate + o;
-            if (val >= 0 && val < 100) {
+            tens = Math.floor(coordinate / 10)
+            if (Math.floor(val / 10) == tens) {
                 points.push(val);
             }
         })
