@@ -9,7 +9,9 @@ const p2Turn = document.getElementById('player2_turn');
 const playerNumber = 1; // need to set in function later
 const maxState = 10;
 
+var gameState = 0; // what values to use?
 var gameData = [];
+var scoreData = [];
 var gridData = [];
 var p1Score = 0;
 var p2Score = 0;
@@ -334,4 +336,7 @@ function updateAll(){
         }
     })
     // console.log(gridData);
+    scoreData.push(p1Score, p2Score);
+    gameData.push(scoreData, gridData);
+    console.log(gameData);
 }
