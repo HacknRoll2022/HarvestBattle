@@ -1,11 +1,12 @@
 const width = 10;
 const user1Grid = document.querySelector('.grid-user1');
 const user1Squares = []
-const plants = ['', 'carrot_plant.png','carrot_grow.png','carrot_rot.png','radish_plant.png','radish_grow.png','radish_rot.png']
+const plants = [['', 'carrot_plant.png','carrot_grow.png','carrot_rot.png'], ['', 'radish_plant.png','radish_grow.png','radish_rot.png']]
 const p1Score = document.getElementById('p1_score');
 const p2Score = document.getElementById('p2_score');
 const p1Turn = document.getElementById('player1_turn');
 const p2Turn = document.getElementById('player2_turn');
+const playerNumber = 1; // need to set in function later
 
 var playerTurn = 0;
 //create board
@@ -51,6 +52,7 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
     // else{
     //     v.dataset.state = (v.dataset.state==4)?5:((v.dataset.state==5)?6:0);
     // }
+    
     v.style.backgroundImage = 'url(assets/' + plants[v.dataset.state] + ')';
 
     updatePlayerTurn();
@@ -241,4 +243,31 @@ function updatePlayerTurn(){
     playerTurn = (playerTurn)?0:1;
     p1Turn.style.display = (playerTurn)?'block':'none';
     p2Turn.style.display = (playerTurn)?'none':'block';
+}
+
+
+function updateAll(){
+    Array.from(user1Squares).forEach(v => {    
+        if(v.dataset.state==0){
+            // increase the age of the plant
+            v.dataset.state = parseInt(v.dataset.state) + 1;
+
+            if (v.dataset.state == 4) {
+                // change to grow
+                v.style.backgroundImage = 'url(assets/' + plants[playerNumber - 1][2] + ')';
+            }
+
+            if (v.dataset.state == 9) {
+                // change to rot
+                v.style.backgroundImage = 'url(assets/' + plants[playerNumber - 1][3] + ')';
+            }
+
+            if (v.dataset.state == 11) {
+                // remove 
+                v.dataset.state = 0
+                v.dataset.id = 0
+                v.style.backgroundImage = 'url(assets/' + plants[playerNumber - 1][0] + ')';
+            }
+        }
+    })
 }
