@@ -17,14 +17,16 @@ var p1Score = 0;
 var p2Score = 0;
 var playerTurn = 0;
 
+var gameActive = false;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // socket.io stuff
 
 //
 // const socket = io('https://dunno.herokuapp.com/'); // use our heroku app when hosting later on
-// const socket = io("")
+const socket = io("http://localhost:3000/")
 
-// socket.on('init', handleInit);
+socket.on('init', handleInit);
 // socket.on('gameState', handleGameState);
 // socket.on('gameOver', handleGameOver);
 // socket.on('gameCode', handleGameCode);
@@ -32,8 +34,56 @@ var playerTurn = 0;
 // socket.on('tooManyPlayers', handleTooManyPlayers);
 
 
+function handleInit(number) {
+    playerNumber = number;
+}
 
+// function handleGameState(gameState) {
+//     if (!gameActive) {
+//       return;
+//     }
+//     gameState = JSON.parse(gameState);
+//     playerTurn = gameState.turn
+// }
 
+// function handleGameOver(data) {
+//     if (!gameActive) {
+//       return;
+//     }
+//     data = JSON.parse(data);
+  
+//     gameActive = false;
+  
+//     if (data.winner === playerNumber) {
+//       alert('You Win!');
+//     } else {
+//       alert('You Lose :(');
+//     }
+//   }
+
+  
+// function handleGameCode(gameCode) {
+//     gameCodeDisplay.innerText = gameCode;
+//   }
+  
+
+//   function handleUnknownCode() {
+//     reset();
+//     alert('Unknown Game Code')
+//   }
+  
+//   function handleTooManyPlayers() {
+//     reset();
+//     alert('This game is already in progress');
+//   }
+  
+  
+// function reset() {
+//     playerNumber = null;
+//     gameCodeInput.value = '';
+//     // TODO: reset the board
+//   }
+  
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -42,6 +92,8 @@ function init() {
     updateScore(0);
     updatePlayerTurn();
     createBoard(user1Grid, user1Squares)
+    gameActive = true;
+    
 }
 
 //create board

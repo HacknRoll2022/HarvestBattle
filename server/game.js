@@ -11,6 +11,8 @@ function initGame() {
         }, {
             score: 0,
         }],
+        turn: 1,
+        
         // TODO: add the board data
 
     }
