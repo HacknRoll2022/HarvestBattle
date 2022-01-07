@@ -2,6 +2,12 @@ const width = 10;
 const user1Grid = document.querySelector('.grid-user1');
 const user1Squares = []
 const plants = ['', 'carrot_plant.png','carrot_grow.png','carrot_rot.png','radish_plant.png','radish_grow.png','radish_rot.png']
+const p1Score = document.getElementById('p1_score');
+const p2Score = document.getElementById('p2_score');
+const p1Turn = document.getElementById('player1_turn');
+const p2Turn = document.getElementById('player2_turn');
+
+var playerTurn = 0;
 //create board
 function createBoard(grid, squares) {
     for (let i = 0; i < width * width; i++) {
@@ -46,6 +52,9 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
     //     v.dataset.state = (v.dataset.state==4)?5:((v.dataset.state==5)?6:0);
     // }
     v.style.backgroundImage = 'url(assets/' + plants[v.dataset.state] + ')';
+
+    updatePlayerTurn();
+
 
 }));
 
@@ -111,91 +120,6 @@ document.querySelectorAll('.action_button').forEach(b => b.addEventListener('cli
         btn.style.backgroundColor = '#004AAD';
     })
 )
-
-
-
-
-// ///////////////////////////////////////////////////https://github.com/fahadhaidari/game-code-bites/blob/master/grid-based-system/index.js//////////////////////////////////////////////
-// class GridSystem {
-//     constructor(matrix) {
-//         this.matrix = matrix;
-//         this.uiContext = this.#getContext(420, 580, "#000");
-//         this.outlineContext = this.#getContext(0, 0, "#444");
-//         this.topContext = this.#getContext(0, 0, "#111", true);
-//         this.cellSize = 40;
-//         this.padding = 2;
-//     }
-
-//     #getCenter(w, h) {
-//         return {
-//             x: window.innerWidth / 2 - w / 2 + "px",
-//             y: window.innerHeight / 2 - h / 2 + "px"
-//         };
-//     }
-
-//     #getContext(w, h, color = "#111", isTransparent = false) {
-//         this.canvas = document.createElement("canvas");
-//         this.context = this.canvas.getContext("2d");
-//         this.width = this.canvas.width = w;
-//         this.height = this.canvas.height = h;
-//         this.canvas.style.position = "absolute";
-//         this.canvas.style.background = color;
-//         if (isTransparent) {
-//             this.canvas.style.backgroundColor = "transparent";
-//         }
-//         const center = this.#getCenter(w, h);
-//         this.canvas.style.marginLeft = center.x
-//         this.canvas.style.marginTop = center.y;
-//         document.body.appendChild(this.canvas);
-
-//         return this.context;
-//     }
-
-//     render() {
-//         const w = (this.cellSize + this.padding) * this.matrix[0].length - (this.padding);
-//         const h = (this.cellSize + this.padding) * this.matrix.length - (this.padding);
-
-//         this.outlineContext.canvas.width = w;
-//         this.outlineContext.canvas.height = h;
-
-//         const center = this.#getCenter(w, h);
-//         this.outlineContext.canvas.style.marginLeft = center.x
-//         this.outlineContext.canvas.style.marginTop = center.y;
-
-//         this.topContext.canvas.style.marginLeft = center.x
-//         this.topContext.canvas.style.marginTop = center.y;
-
-//         for (let row = 0; row < this.matrix.length; row++) {
-//             for (let col = 0; col < this.matrix[row].length; col++) {
-//                 this.outlineContext.fillStyle = this.matrix[row][col] > 0 ? "#4488FF" : (this.matrix[row][col]==0? "#111": 'purple');
-//                 this.outlineContext.fillRect(col * (this.cellSize + this.padding),
-//                     row * (this.cellSize + this.padding),
-//                     this.cellSize, this.cellSize);
-//             }
-//         }
-
-//         this.uiContext.font = "20px Courier";
-//         this.uiContext.fillStyle = "white";
-//         this.uiContext.fillText("Grid Based System", 20, 30);
-//     }
-// }
-
-// const gridMatrix = [
-//     [1, 1, 1, 1, 1, 1, 1],
-//     [1, 0, 0, 0, 0, 0, 1],
-//     [1, 0, 0, 0, 0, 0, 1],
-//     [1, 0, 0, 0, 0, 0, 1],
-//     [1, 0, 1, 1, 1, 0, 1],
-//     [1, 0, 0, 0, 1, 0, 1],
-//     [1, 0, 1, 1, 1, 0, 1],
-//     [1, 0, 0, 0, 0, 0, 1],
-//     [1, 1, 1, 1, 1, 1, 1]
-// ];
-
-// const gridSystem = new GridSystem(gridMatrix);
-
-// gridSystem.render();
-
 
 function plant(coordinate, action){
     const points = new Array();
@@ -307,4 +231,14 @@ function plant(coordinate, action){
         points.push(coordinate);
         return points
     }
+}
+
+function updateScore(){
+    //if(player)
+}
+
+function updatePlayerTurn(){
+    playerTurn = (playerTurn)?0:1;
+    p1Turn.style.display = (playerTurn)?'block':'none';
+    p2Turn.style.display = (playerTurn)?'none':'block';
 }
