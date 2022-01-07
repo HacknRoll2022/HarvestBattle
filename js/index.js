@@ -119,3 +119,90 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
 // const gridSystem = new GridSystem(gridMatrix);
 
 // gridSystem.render();
+
+
+function plant(coordinate, action){
+    const points = new Array();
+
+    if(action == 1){
+        points.push(coordinate - 11);
+        points.push(coordinate - 10);
+        points.push(coordinate - 9);
+        points.push(coordinate - 1);
+        points.push(coordinate);
+        points.push(coordinate + 1);
+        points.push(coordinate + 9);
+        points.push(coordinate + 10);
+        points.push(coordinate + 11);
+
+        return points;
+    }
+    if(action == 2){
+        points.push(coordinate - 40);
+        points.push(coordinate - 30);
+        points.push(coordinate - 20);
+        points.push(coordinate - 10);
+        points.push(coordinate);
+        points.push(coordinate + 10);
+        points.push(coordinate + 20);
+        points.push(coordinate + 30);
+        points.push(coordinate + 40);
+
+        return points;
+    }
+    if(action == 3){
+        points.push(coordinate - 4);
+        points.push(coordinate - 3);
+        points.push(coordinate - 2);
+        points.push(coordinate - 1);
+        points.push(coordinate);
+        points.push(coordinate + 1);
+        points.push(coordinate + 2);
+        points.push(coordinate + 3);
+        points.push(coordinate + 4);
+
+        return points;
+    }
+    if(action == 4){
+        points.push(coordinate - 10);
+        points.push(coordinate - 9);
+        points.push(coordinate);
+        points.push(coordinate + 1);
+
+        return points;
+    }
+    if(action == 5){
+        points.push(coordinate - 3);
+        points.push(coordinate - 2);
+        points.push(coordinate - 1);
+        points.push(coordinate);
+
+        return points;
+    }
+    if(action == 6){
+        points.push(coordinate);
+        points.push(coordinate + 1);
+        points.push(coordinate + 2);
+        points.push(coordinate + 3);
+
+        return points;
+    }
+    if(action == 7){
+        points.push(coordinate - 10);
+        points.push(coordinate - 1);
+        points.push(coordinate);
+        points.push(coordinate + 1);
+        points.push(coordinate + 10);
+
+        return points;
+    }
+    if(action == 8){
+        points.push(coordinate - 11);
+        points.push(coordinate - 9);
+        points.push(coordinate);
+        points.push(coordinate + 9);
+        points.push(coordinate + 11);
+
+        return points;
+    }
+}
