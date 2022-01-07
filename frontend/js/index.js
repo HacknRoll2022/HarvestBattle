@@ -17,6 +17,26 @@ var p1Score = 0;
 var p2Score = 0;
 var playerTurn = 0;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// socket.io stuff
+
+//
+// const socket = io('https://dunno.herokuapp.com/'); // use our heroku app when hosting later on
+// const socket = io("")
+
+// socket.on('init', handleInit);
+// socket.on('gameState', handleGameState);
+// socket.on('gameOver', handleGameOver);
+// socket.on('gameCode', handleGameCode);
+// socket.on('unknownCode', handleUnknownCode);
+// socket.on('tooManyPlayers', handleTooManyPlayers);
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 init();
 function init() {
     updateScore(0);
