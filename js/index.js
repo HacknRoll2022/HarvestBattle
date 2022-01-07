@@ -282,11 +282,11 @@ function plant(coordinate, action){
 function updateScore(score){
     if(playerNumber == 1) {
         p1Score += score;
-        p1Score_el.textContent = "Player 1: " + String(p1Score);
     } else {
         p2Score += score;
-        p2Score_el.textContent = "Player 2: " + String(p2Score);
     }
+    p1Score_el.textContent = "Player 1: " + String(p1Score);
+    p2Score_el.textContent = "Player 2: " + String(p2Score);
 }
 
 function updatePlayerTurn(){
