@@ -1,3 +1,6 @@
+body {
+    background-color: #498A0C;
+}
 .container{
     display: flex;
 }
@@ -41,7 +44,7 @@
 }
 
 .action_button {
-	background-color: #fccd66;
+	background-color: #48CAFD;
 	/* background-image: linear-gradient(#ffe16d, #fccd66); */
 	box-sizing: border-box;
 	border-radius: 15px;
@@ -52,6 +55,14 @@
 	margin: 5px;
 	padding: 15px 10px;	
 	text-align: center;
+}
+
+.squarebox {
+    margin: auto;
+    width: 50%;
+    background-color: white;
+	padding-bottom: 100%; 
+	overflow: hidden;
 }
 
 .flower-container{

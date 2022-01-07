@@ -47,11 +47,11 @@ document.querySelectorAll('.action_button').forEach(b => b.addEventListener('cli
         var btns = document.querySelectorAll('.action_button');
         [].forEach.call(btns, function(btns) {
             btns.dataset.selected = 0;
-            btns.style.backgroundColor = "#fccd66";
+            btns.style.backgroundColor = "#2ec4ff";
         });
         
         btn.dataset.selected = 1;
-        btn.style.backgroundColor = '#F5DBBC';
+        btn.style.backgroundColor = '#004AAD';
     })
 )
 
