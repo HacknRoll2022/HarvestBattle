@@ -42,55 +42,57 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
     [].forEach.call(btns, function(btns) {
         if (btns.dataset.selected == 1) {
             action_type = String(btns.id).substring(0,1);
-        }
+        } 
     })
     
-    if (action_type == "p") {
-        Array.from(user1Squares).forEach(v => {
-            var sqClass = document.getElementById('sq' + v.dataset.id).className;
-            if (sqClass.includes("highlight") && v.dataset.type == 0 && v.dataset.state == 0) {
-                v.dataset.state = 1;
-                v.dataset.type = playerNumber;
+    if (action_type != "") {
+        if (action_type == "p") {
+            Array.from(user1Squares).forEach(v => {
+                var sqClass = document.getElementById('sq' + v.dataset.id).className;
+                if (sqClass.includes("highlight") && v.dataset.type == 0 && v.dataset.state == 0) {
+                    v.dataset.state = 1;
+                    v.dataset.type = playerNumber;
 
-                if (playerNumber == 1) {
-                    v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
-                } else if (playerNumber == 2) {
-                    v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+                    if (playerNumber == 1) {
+                        v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
+                    } else if (playerNumber == 2) {
+                        v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+                    }
                 }
-            }
-        })
-    } else if (action_type == "h") {
-        Array.from(user1Squares).forEach(v => {
-            var sqClass = document.getElementById('sq' + v.dataset.id).className;
-            if (sqClass.includes("highlight") && (v.dataset.state > 4 && v.dataset.state <= 8) && v.dataset.type == playerNumber) {
-                v.dataset.state = 0;
-                v.dataset.type = 0;
-                if (playerNumber == 1) {
-                    v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
-                } else if (playerNumber == 2) {
-                    v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+            })
+        } else if (action_type == "h") {
+            var numHarvest = 0;
+            Array.from(user1Squares).forEach(v => {
+                var sqClass = document.getElementById('sq' + v.dataset.id).className;
+                if (sqClass.includes("highlight") && (v.dataset.state > 4 && v.dataset.state <= 8) && v.dataset.type == playerNumber) {
+                    numHarvest += 1;
+                    v.dataset.state = 0;
+                    v.dataset.type = 0;
+                    if (playerNumber == 1) {
+                        v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
+                    } else if (playerNumber == 2) {
+                        v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+                    }
                 }
-            }
-        })
-    } else if (action_type == "s") {
-        Array.from(user1Squares).forEach(v => {
-            var sqClass = document.getElementById('sq' + v.dataset.id).className;
-            if (sqClass.includes("highlight") && v.dataset.state < 9 && v.dataset.type != playerNumber && v.dataset.type != 0) {
-                v.dataset.state = 0;
-                v.dataset.type = 0;
-                if (playerNumber == 1) {
-                    v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
-                } else if (playerNumber == 2) {
-                    v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+            })
+        } else if (action_type == "s") {
+            Array.from(user1Squares).forEach(v => {
+                var sqClass = document.getElementById('sq' + v.dataset.id).className;
+                if (sqClass.includes("highlight") && v.dataset.state < 9 && v.dataset.type != playerNumber && v.dataset.type != 0) {
+                    v.dataset.state = 0;
+                    v.dataset.type = 0;
+                    if (playerNumber == 1) {
+                        v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
+                    } else if (playerNumber == 2) {
+                        v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+                    }
                 }
-            }
-        })
+            })
+        }
+
+        updatePlayerTurn();
+        updateAll();
     }
-
-    updatePlayerTurn();
-    updateAll();
-
-
 }));
 
 // Highlight squares
@@ -148,7 +150,7 @@ document.querySelectorAll('.action_button').forEach(b => b.addEventListener('cli
         var btns = document.querySelectorAll('.action_button');
         [].forEach.call(btns, function(btns) {
             btns.dataset.selected = 0;
-            btns.style.backgroundColor = "#2ec4ff";
+            btns.style.backgroundColor = "#48CAFD";
         });
         
         btn.dataset.selected = 1;
