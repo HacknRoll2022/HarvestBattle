@@ -10,9 +10,6 @@ const winningScreen = document.getElementById('winningScreen');
 const winningText = document.getElementById('winning_text');
 const endscore1 = document.getElementById('endscore1');
 const endscore2 = document.getElementById('endscore2');
-
-
-const playerNumber = 1; // need to set in function later
 const maxState = 10;
 
 var gameData = [];
