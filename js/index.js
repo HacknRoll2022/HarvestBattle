@@ -15,18 +15,17 @@ const endscore2 = document.getElementById('endscore2');
 const playerNumber = 1; // need to set in function later
 const maxState = 10;
 
-var gameState = 0; // what values to use?
 var gameData = [];
 var scoreData = [];
 var gridData = [];
 var p1Score = 0;
 var p2Score = 0;
 var playerTurn = 0;
+var playerNumber = 1; // need to set in function later
 
 init();
 function init() {
     updateScore(0);
-    updatePlayerTurn();
     createBoard(user1Grid, user1Squares)
 }
 
@@ -45,9 +44,6 @@ function createBoard(grid, squares) {
     }
 }
 
-
-// var grid = document.getElementsByClassName('square');
-
 Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
     // console.log( typeof Object.assign({}, v.dataset));
     console.log(v.dataset.state)
@@ -61,11 +57,13 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
         } 
     })
     
+    var validMove = false;
     if (action_type != "") {
         if (action_type == "p") {
             Array.from(user1Squares).forEach(v => {
                 var sqClass = document.getElementById('sq' + v.dataset.id).className;
                 if (sqClass.includes("highlight") && v.dataset.type == 0 && v.dataset.state == 0) {
+                    validMove = true;
                     v.dataset.state = 1;
                     v.dataset.type = playerNumber;
 
@@ -81,6 +79,7 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
             Array.from(user1Squares).forEach(v => {
                 var sqClass = document.getElementById('sq' + v.dataset.id).className;
                 if (sqClass.includes("highlight") && (v.dataset.state > 4 && v.dataset.state <= 8) && v.dataset.type == playerNumber) {
+                    validMove = true;
                     numHarvest += 1;
                     v.dataset.state = 0;
                     v.dataset.type = 0;
@@ -96,6 +95,7 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
             Array.from(user1Squares).forEach(v => {
                 var sqClass = document.getElementById('sq' + v.dataset.id).className;
                 if (sqClass.includes("highlight") && v.dataset.state < 9 && v.dataset.type != playerNumber && v.dataset.type != 0) {
+                    validMove = true;
                     v.dataset.state = 0;
                     v.dataset.type = 0;
                     if (playerNumber == 1) {
@@ -107,8 +107,12 @@ Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
             })
         }
 
-        updatePlayerTurn();
-        updateAll();
+        if (validMove) {
+            updatePlayerTurn();
+            updateAll();
+        } else {
+            alert('That\'s an invalid move, Player ' + playerNumber + '! Please try again. :\'D')
+        }
     }
 }));
 
@@ -305,17 +309,16 @@ function updateScore(score){
 }
 
 function updatePlayerTurn(){
-    playerTurn = (playerTurn)?0:1;
-    // p1Turn.style.display = (playerTurn)?'block':'none';
-    // p2Turn.style.display = (playerTurn)?'none':'block';
+    // playerTurn = (playerTurn)?0:1;
 
     if(playerNumber == 1) {
-        p1Turn.textContent = (playerTurn)?'It\'s your turn!':'';
-        p2Turn.textContent = (playerTurn)?'':'It\'s Player 2\'s turn!';
-        // user1Squares.style.pointerEvents = 'auto';  
+        p1Turn.textContent = '';
+        p2Turn.textContent = 'It\'s Player 2\'s turn!';
+        playerNumber = 2;
     } else {
-        p2Turn.textContent = (playerTurn)?'It\'s your turn!':'';
-        p1Turn.textContent = (playerTurn)?'':'It\'s Player 1\'s turn!';
+        p2Turn.textContent = '';
+        p1Turn.textContent = 'It\'s Player 1\'s turn!';
+        playerNumber = 1;
     }
     
 }
