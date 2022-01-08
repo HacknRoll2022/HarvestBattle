@@ -6,6 +6,12 @@ const p1Score_el = document.getElementById('p1_score');
 const p2Score_el = document.getElementById('p2_score');
 const p1Turn = document.getElementById('player1_turn');
 const p2Turn = document.getElementById('player2_turn');
+const winningScreen = document.getElementById('winningScreen');
+const winningText = document.getElementById('winning_text');
+const endscore1 = document.getElementById('endscore1');
+const endscore2 = document.getElementById('endscore2');
+
+
 const playerNumber = 1; // need to set in function later
 const maxState = 10;
 
@@ -284,8 +290,15 @@ function plant(coordinate, action){
 function updateScore(score){
     if(playerNumber == 1) {
         p1Score += score;
+        if(p1Score>=1000){
+            return endGame();
+        }
     } else {
         p2Score += score;
+        if(p2Score>=1000){
+            return endGame();
+        }
+
     }
     p1Score_el.textContent = "Player 1: " + String(p1Score);
     p2Score_el.textContent = "Player 2: " + String(p2Score);
@@ -299,6 +312,7 @@ function updatePlayerTurn(){
     if(playerNumber == 1) {
         p1Turn.textContent = (playerTurn)?'It\'s your turn!':'';
         p2Turn.textContent = (playerTurn)?'':'It\'s Player 2\'s turn!';
+        // user1Squares.style.pointerEvents = 'auto';  
     } else {
         p2Turn.textContent = (playerTurn)?'It\'s your turn!':'';
         p1Turn.textContent = (playerTurn)?'':'It\'s Player 1\'s turn!';
@@ -339,4 +353,13 @@ function updateAll(){
     scoreData.push(p1Score, p2Score);
     gameData.push(scoreData, gridData);
     console.log(gameData);
+}
+
+function endGame(){
+    // winningScreen.style.dataToggle="model" ;
+    // winningScreen.style.dataTarget="#winningScreen";
+    winningScreen.style.display = "block";
+    winningText.textContent = (playerTurn)?'PLAYER 1 WINS':'PLAYER 2 WINS';
+    endscore1.textContent = "Player 1: " + String(p1Score);
+    endscore2.textContent = "Player 2: " + String(p2Score);
 }
