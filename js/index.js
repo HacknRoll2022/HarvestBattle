@@ -18,7 +18,7 @@ var gridData = [];
 var p1Score = 0;
 var p2Score = 0;
 var playerTurn = 0;
-var playerNumber = 1; // need to set in function later
+var playerNumber = 0;
 
 init();
 function init() {
@@ -170,6 +170,10 @@ document.querySelectorAll('.action_button').forEach(b => b.addEventListener('cli
             btns.dataset.selected = 0;
             btns.style.backgroundColor = "#48CAFD";
         });
+
+        if (playerNumber == 0) {
+            updatePlayerTurn();
+        }
         
         btn.dataset.selected = 1;
         btn.style.backgroundColor = '#004AAD';
@@ -312,6 +316,10 @@ function updatePlayerTurn(){
         p1Turn.textContent = '';
         p2Turn.textContent = 'It\'s Player 2\'s turn!';
         playerNumber = 2;
+    } else if(playerNumber == 2){
+        p2Turn.textContent = '';
+        p1Turn.textContent = 'It\'s Player 1\'s turn!';
+        playerNumber = 1;
     } else {
         p2Turn.textContent = '';
         p1Turn.textContent = 'It\'s Player 1\'s turn!';
