@@ -9,6 +9,34 @@ const p2Turn = document.getElementById('player2_turn');
 const playerNumber = 1; // need to set in function later
 const maxState = 10;
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const gameScreen = document.getElementById('gameScreen');
+const initialScreen = document.getElementById('initialScreen');
+const newGameBtn = document.getElementById('newGameButton');
+const joinGameBtn = document.getElementById('joinGameButton');
+const gameCodeInput = document.getElementById('gameCodeInput');
+const gameCodeDisplay = document.getElementById('gameCodeDisplay');
+
+newGameBtn.addEventListener('click', newGame);
+joinGameBtn.addEventListener('click', joinGame);
+
+function newGame() {
+    socket.emit('newGame');
+    init();
+  }
+
+  function joinGame() {
+    const code = gameCodeInput.value;
+    socket.emit('joinGame', code);
+    init();
+  }
+  
+  
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 var gameState = 0; // what values to use?
 var gameData = [];
 var scoreData = [];
@@ -27,62 +55,62 @@ var gameActive = false;
 const socket = io("http://localhost:3000/")
 
 socket.on('init', handleInit);
-// socket.on('gameState', handleGameState);
-// socket.on('gameOver', handleGameOver);
-// socket.on('gameCode', handleGameCode);
-// socket.on('unknownCode', handleUnknownCode);
-// socket.on('tooManyPlayers', handleTooManyPlayers);
+socket.on('gameState', handleGameState);
+socket.on('gameOver', handleGameOver);
+socket.on('gameCode', handleGameCode);
+socket.on('unknownCode', handleUnknownCode);
+socket.on('tooManyPlayers', handleTooManyPlayers);
 
 
 function handleInit(number) {
     playerNumber = number;
 }
 
-// function handleGameState(gameState) {
-//     if (!gameActive) {
-//       return;
-//     }
-//     gameState = JSON.parse(gameState);
-//     playerTurn = gameState.turn
-// }
+function handleGameState(gameState) {
+    if (!gameActive) {
+      return;
+    }
+    gameData = JSON.parse(gameState);
+    playerTurn = gameState.turn 
+}
 
-// function handleGameOver(data) {
-//     if (!gameActive) {
-//       return;
-//     }
-//     data = JSON.parse(data);
+function handleGameOver(data) {
+    if (!gameActive) {
+      return;
+    }
+    data = JSON.parse(data);
   
-//     gameActive = false;
+    gameActive = false;
   
-//     if (data.winner === playerNumber) {
-//       alert('You Win!');
-//     } else {
-//       alert('You Lose :(');
-//     }
-//   }
+    if (data.winner === playerNumber) {
+      alert('You Win!');
+    } else {
+      alert('You Lose :(');
+    }
+  }
 
   
-// function handleGameCode(gameCode) {
-//     gameCodeDisplay.innerText = gameCode;
-//   }
+function handleGameCode(gameCode) {
+    gameCodeDisplay.innerText = gameCode;
+  }
   
 
-//   function handleUnknownCode() {
-//     reset();
-//     alert('Unknown Game Code')
-//   }
+  function handleUnknownCode() {
+    reset();
+    alert('Unknown Game Code')
+  }
   
-//   function handleTooManyPlayers() {
-//     reset();
-//     alert('This game is already in progress');
-//   }
+  function handleTooManyPlayers() {
+    reset();
+    alert('This game is already in progress');
+  }
   
   
-// function reset() {
-//     playerNumber = null;
-//     gameCodeInput.value = '';
-//     // TODO: reset the board
-//   }
+function reset() {
+    playerNumber = null;
+    gameCodeInput.value = '';
+    createBoard(user1Grid, user1Squares);
+  }
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -115,66 +143,72 @@ function createBoard(grid, squares) {
 // var grid = document.getElementsByClassName('square');
 
 Array.from(user1Squares).forEach(v => v.addEventListener('click', function () {
-    // console.log( typeof Object.assign({}, v.dataset));
-    console.log(v.dataset.state)
+    if (playerTurn == playerNumber) { // clicks only affect if its their turn
 
-    var btns = document.querySelectorAll('.action_button');
-    var action_type = "";
+        // console.log( typeof Object.assign({}, v.dataset));
+        console.log(v.dataset.state)
 
-    [].forEach.call(btns, function(btns) {
-        if (btns.dataset.selected == 1) {
-            action_type = String(btns.id).substring(0,1);
-        } 
-    })
-    
-    if (action_type != "") {
-        if (action_type == "p") {
-            Array.from(user1Squares).forEach(v => {
-                var sqClass = document.getElementById('sq' + v.dataset.id).className;
-                if (sqClass.includes("highlight") && v.dataset.type == 0 && v.dataset.state == 0) {
-                    v.dataset.state = 1;
-                    v.dataset.type = playerNumber;
+        var btns = document.querySelectorAll('.action_button');
+        var action_type = "";
 
-                    if (playerNumber == 1) {
-                        v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
-                    } else if (playerNumber == 2) {
-                        v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+        [].forEach.call(btns, function(btns) {
+            if (btns.dataset.selected == 1) {
+                action_type = String(btns.id).substring(0,1);
+            } 
+        })
+        
+        if (action_type != "") {
+            if (action_type == "p") {
+                Array.from(user1Squares).forEach(v => {
+                    var sqClass = document.getElementById('sq' + v.dataset.id).className;
+                    if (sqClass.includes("highlight") && v.dataset.type == 0 && v.dataset.state == 0) {
+                        v.dataset.state = 1;
+                        v.dataset.type = playerNumber;
+
+                        if (playerNumber == 1) {
+                            v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
+                        } else if (playerNumber == 2) {
+                            v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+                        }
                     }
-                }
-            })
-        } else if (action_type == "h") {
-            var numHarvest = 0;
-            Array.from(user1Squares).forEach(v => {
-                var sqClass = document.getElementById('sq' + v.dataset.id).className;
-                if (sqClass.includes("highlight") && (v.dataset.state > 4 && v.dataset.state <= 8) && v.dataset.type == playerNumber) {
-                    numHarvest += 1;
-                    v.dataset.state = 0;
-                    v.dataset.type = 0;
-                    if (playerNumber == 1) {
-                        v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
-                    } else if (playerNumber == 2) {
-                        v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+                })
+            } else if (action_type == "h") {
+                var numHarvest = 0;
+                Array.from(user1Squares).forEach(v => {
+                    var sqClass = document.getElementById('sq' + v.dataset.id).className;
+                    if (sqClass.includes("highlight") && (v.dataset.state > 4 && v.dataset.state <= 8) && v.dataset.type == playerNumber) {
+                        numHarvest += 1;
+                        v.dataset.state = 0;
+                        v.dataset.type = 0;
+                        if (playerNumber == 1) {
+                            v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
+                        } else if (playerNumber == 2) {
+                            v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+                        }
                     }
-                }
-            })
-            updateScore(numHarvest * 10);
-        } else if (action_type == "s") {
-            Array.from(user1Squares).forEach(v => {
-                var sqClass = document.getElementById('sq' + v.dataset.id).className;
-                if (sqClass.includes("highlight") && v.dataset.state < 9 && v.dataset.type != playerNumber && v.dataset.type != 0) {
-                    v.dataset.state = 0;
-                    v.dataset.type = 0;
-                    if (playerNumber == 1) {
-                        v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
-                    } else if (playerNumber == 2) {
-                        v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+                })
+                updateScore(numHarvest * 10);
+            } else if (action_type == "s") {
+                Array.from(user1Squares).forEach(v => {
+                    var sqClass = document.getElementById('sq' + v.dataset.id).className;
+                    if (sqClass.includes("highlight") && v.dataset.state < 9 && v.dataset.type != playerNumber && v.dataset.type != 0) {
+                        v.dataset.state = 0;
+                        v.dataset.type = 0;
+                        if (playerNumber == 1) {
+                            v.style.backgroundImage = 'url(assets/' + plants[0][v.dataset.state] + ')';
+                        } else if (playerNumber == 2) {
+                            v.style.backgroundImage = 'url(assets/' + plants[1][v.dataset.state] + ')';
+                        }
                     }
-                }
-            })
+                })
+            }
+
+            updatePlayerTurn();
+            updateAll();
+
+            // update socket side
+            socket.emit('boardUpdate', {"code": code, "gameData": gameData});
         }
-
-        updatePlayerTurn();
-        updateAll();
     }
 }));
 
@@ -407,8 +441,13 @@ function updateAll(){
             
         }
     })
+
+    // flush old data out
+    scoreData = []
+    gameData = []
+
     // console.log(gridData);
     scoreData.push(p1Score, p2Score);
-    gameData.push(scoreData, gridData);
-    console.log(gameData);
+    gameData.push(scoreData, gridData, playerTurn);
+
 }
