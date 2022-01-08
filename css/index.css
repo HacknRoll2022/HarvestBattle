@@ -1,4 +1,4 @@
-body {
+.body {
     background-color: #45830c;
 }
 .center {
@@ -29,7 +29,6 @@ body {
 }
 #winningScreen{    
     background-image: url("../assets/confetti.gif");
-
 }
 
 .highlight {
